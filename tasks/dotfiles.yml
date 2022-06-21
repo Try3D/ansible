@@ -1,0 +1,17 @@
+- hosts: localhost
+  tasks:
+    - name: Install stow
+      package:
+        name:
+          - stow
+        state: latest
+      become: yes
+
+    - name: Clone .dotfiles
+      ansible.builtin.git:
+        repo: 'https://github.com/Try3D/.dotfiles.git'
+        dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
+        update: yes
+
+    - name: Install .dotfiles
+      shell: "stow */"

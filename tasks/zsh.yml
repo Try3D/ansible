@@ -1,0 +1,22 @@
+- hosts: localhost
+  tasks:
+    - name: Install zsh
+      package:
+        name:
+          - zsh
+        state: latest
+      become: yes
+
+    - name: Clone zsh plugins
+      ansible.builtin.git:
+        repo: 'https://github.com/zsh-users/zsh-autosuggestions'
+        dest: "{{ lookup('env', 'HOME') }}/.zsh-plugins/zsh-autosuggestions"
+        update: yes
+
+        repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
+        dest: "{{ lookup('env', 'HOME') }}/.zsh-plugins/zsh-syntax-highlighting"
+        update: yes
+
+        repo: 'https://github.com/romkatv/powerlevel10k.git'
+        dest: "{{ lookup('env', 'HOME') }}/.zsh-plugins/powerlevel10k"
+        update: yes
